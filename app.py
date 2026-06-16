@@ -198,11 +198,74 @@ div[data-testid="stMetric"] [data-testid="stMetricValue"] {{
     color: white !important;
 }}
 
-.stSelectbox > div > div,
-.stNumberInput > div > div > input {{
-    background: var(--bg-card) !important;
+/* Selectbox, Number Input, Text Input and Buttons Styling */
+div[data-testid="stSelectbox"] > div > div,
+div[data-testid="stTextInput"] input {{
+    background-color: var(--bg-card) !important;
     border: 1px solid var(--border) !important;
     border-radius: 12px !important;
+    color: var(--text-primary) !important;
+}}
+
+/* Custom Number Input wrapper, input field, and buttons (+ / -) */
+div[data-testid="stNumberInput"] {{
+    background-color: transparent !important;
+}}
+div[data-testid="stNumberInput"] > div {{
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+}}
+div[data-testid="stNumberInput"] > div div,
+div[data-testid="stNumberInput"] input {{
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    border: none !important;
+}}
+div[data-testid="stNumberInput"] button {{
+    background-color: var(--bg-card-hover) !important;
+    color: var(--text-primary) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    margin: 2px !important;
+}}
+div[data-testid="stNumberInput"] button:hover {{
+    background-color: var(--accent) !important;
+    color: white !important;
+}}
+
+/* Ensure selectbox dropdown arrow is visible */
+div[data-testid="stSelectbox"] svg {{
+    fill: var(--text-primary) !important;
+}}
+
+/* Ensure selected option text is visible inside input */
+div[data-testid="stSelectbox"] [data-testid="stMarkdownContainer"] p {{
+    color: var(--text-primary) !important;
+}}
+
+/* Selectbox Dropdown Menu Popovers styling */
+div[data-baseweb="popover"],
+div[data-baseweb="popover"] ul,
+div[data-baseweb="popover"] li,
+div[data-baseweb="popover"] [data-baseweb="option"],
+div[data-testid="stVirtualDropdown"],
+ul[data-testid="stSelectboxVirtualDropdown"] {{
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}}
+
+ul[data-testid="stSelectboxVirtualDropdown"] li[role="option"],
+ul[data-testid="stSelectboxVirtualDropdown"] [data-baseweb="option"] {{
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}}
+
+ul[data-testid="stSelectboxVirtualDropdown"] li[role="option"]:hover,
+ul[data-testid="stSelectboxVirtualDropdown"] [data-baseweb="option"]:hover,
+ul[data-testid="stSelectboxVirtualDropdown"] li[role="option"][aria-selected="true"],
+ul[data-testid="stSelectboxVirtualDropdown"] [data-baseweb="option"][aria-selected="true"] {{
+    background-color: var(--bg-card-hover) !important;
     color: var(--text-primary) !important;
 }}
 
