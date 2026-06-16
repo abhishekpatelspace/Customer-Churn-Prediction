@@ -54,7 +54,7 @@ The best model (by ROC-AUC) is automatically selected and saved.
 - **Step 1 🏠 Overview** — KPIs, churn distribution, revenue impact
 - **Step 2 📊 Exploratory Analysis** — Distributions, correlations, statistical tests
 - **Step 3 🤖 Model Performance** — Metrics comparison, confusion matrices, ROC curves
-- ** Step 4🔮 Predict Churn** — Real-time single-customer prediction with risk analysis
+- **Step 4🔮 Predict Churn** — Real-time single-customer prediction with risk analysis
 
 ## 📦 Dataset
 
