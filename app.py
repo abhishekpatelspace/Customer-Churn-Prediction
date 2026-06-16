@@ -269,6 +269,51 @@ div[data-testid="stAlert"] {{ border-radius: 12px; border: none; }}
     to {{ opacity: 1; transform: translateY(0); }}
 }}
 
+.kpi-container {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 16px 0 24px;
+}}
+.kpi-card {{
+    flex: 1 1 calc(20% - 16px);
+    min-width: 150px;
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover)) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(108, 99, 255, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}}
+.kpi-card:hover {{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(108, 99, 255, 0.12);
+}}
+.kpi-label {{
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}}
+.kpi-value {{
+    color: var(--text-primary) !important;
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-top: 4px;
+}}
+.kpi-delta {{
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 2px;
+}}
+.kpi-delta.up {{
+    color: var(--danger) !important;
+}}
+.kpi-delta.down {{
+    color: var(--success) !important;
+}}
+
 #MainMenu {{visibility: hidden;}}
 footer {{visibility: hidden;}}
 header {{visibility: hidden;}}
@@ -317,12 +362,20 @@ def load_dashboard_data():
 
 
 @st.cache_resource
+def _load_model_cached():
+    """Load model from disk. If missing, raises FileNotFoundError so Streamlit doesn't cache the failure."""
+    return load_model()
+
 def load_trained_model():
     """Load the pre-trained model pipeline and metadata."""
     try:
-        pipeline, metadata = load_model()
+        pipeline, metadata = _load_model_cached()
         return pipeline, metadata, True
-    except FileNotFoundError:
+    except Exception as e:
+        if not isinstance(e, FileNotFoundError):
+            import traceback
+            st.sidebar.error(f"Error loading model: {e}")
+            st.sidebar.code(traceback.format_exc())
         return None, None, False
 
 
@@ -475,12 +528,31 @@ if page == "🏠 Overview":
     avg_tenure = df["tenure"].mean()
     avg_monthly = df["MonthlyCharges"].mean()
 
-    c1, c2, c3, c4, c5 = st.columns(5)
-    c1.metric("Total Customers", f"{total:,}")
-    c2.metric("Churned", f"{churned:,}", delta=f"{churn_rate:.1f}%", delta_color="inverse")
-    c3.metric("Retained", f"{retained:,}")
-    c4.metric("Avg Tenure", f"{avg_tenure:.0f} mo")
-    c5.metric("Avg Monthly $", f"${avg_monthly:.2f}")
+    st.markdown(f"""
+    <div class="kpi-container">
+        <div class="kpi-card">
+            <div class="kpi-label">Total Customers</div>
+            <div class="kpi-value">{total:,}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Churned Customers</div>
+            <div class="kpi-value">{churned:,}</div>
+            <div class="kpi-delta up">▲ {churn_rate:.1f}% Churn Rate</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Retained Customers</div>
+            <div class="kpi-value">{retained:,}</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Avg Tenure</div>
+            <div class="kpi-value">{avg_tenure:.0f} mo</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-label">Avg Monthly Charges</div>
+            <div class="kpi-value">${avg_monthly:.2f}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.markdown("")
 
