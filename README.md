@@ -1,8 +1,8 @@
-# 📉 Customer Churn Prediction Pipeline
+# Customer Churn Prediction Pipeline
 
 A production-grade machine learning pipeline for predicting Telco customer churn in **real-time**, with a premium interactive Streamlit dashboard.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -51,10 +51,10 @@ The best model (by ROC-AUC) is automatically selected and saved.
 
 ## 📊 Dashboard Pages
 
-- **🏠 Overview** — KPIs, churn distribution, revenue impact
-- **📊 Exploratory Analysis** — Distributions, correlations, statistical tests
-- **🤖 Model Performance** — Metrics comparison, confusion matrices, ROC curves
-- **🔮 Predict Churn** — Real-time single-customer prediction with risk analysis
+- **Step 1 🏠 Overview** — KPIs, churn distribution, revenue impact
+- **Step 2 📊 Exploratory Analysis** — Distributions, correlations, statistical tests
+- **Step 3 🤖 Model Performance** — Metrics comparison, confusion matrices, ROC curves
+- ** Step 4🔮 Predict Churn** — Real-time single-customer prediction with risk analysis
 
 ## 📦 Dataset
 
